@@ -1,0 +1,499 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Regular expressions</h1>
+				</section>
+
+				<section>
+					<h3 class="section-title">Questions</h3>
+					<p class="fragment"><a href="#/QUE1">What is a Regular Expression?</a></p>
+					<p class="fragment"><a href="#/QUE2">How do I create a regular expression?</a></p>
+					<p class="fragment"><a href="#/QUE3">What are the rules for writing regular expressions?</a></p>
+					<p class="fragment"><a href="#/QUE4">I just need to find a combination of letters or a word!</a></p>
+					<p class="fragment"><a href="#/QUE5">What if I need to search something more than a direct match?</a></p>
+					<p class="fragment"><a href="#/QUE6">How can I match characters to search?</a></p>
+					<p class="fragment"><a href="#/QUE7">How do I use regular expressions in JavaScript?</a></p>
+					<p class="fragment"><a href="#/QUE8">What if I need to do an advanced search?</a></p>
+					<p class="fragment"><a href="#/QUE9">Where can I find more information?</a></p>
+				</section>
+				  
+				<section id="QUE1">
+					<h3 class="section-title">What is a Regular Expression?</h3>
+					<p>It's a sequence of characters that forms a search pattern.</p>
+				</section>
+
+				<section>
+					<h3>What are Regular Expressions used for?</h3>
+					<h6>Pattern matching</h6>
+					<p class="fragment">Determining if a string matches a particular format, such as a phone number, email address, or credit card number.</p>
+					<h6>Exchange</h6>
+					<p class="fragment">Finding and replacing patterns in a string.</p>
+					<h6>Extraction</h6>
+					<p class="fragment">Extracting pieces of information from a template.</p>
+					<h6>Clear and beautiful code</h6>
+					<p class="fragment">Performing complex operations with minimal code.</p>
+				</section>
+
+				<section id="QUE2">
+					<h3>How do I create a regular expression?</h3>
+					<p class="fragment">You have two ways: using a literal or calling the RegExp constructor function</p>
+					<p class="fragment">Literal consists of a pattern enclosed between slashes, </p>
+					<pre class="fragment"><code>
+						let regular = /ab+c/;
+  						</code></pre>
+					<p class="fragment">and RegExp constructor uses built-in JS function.</p>
+					<pre class="fragment"><code>
+						let regular = new RegExp('ab+c');
+  						</code></pre>
+				</section>
+
+				<section id="QUE3">
+					<h3>What are the rules for writing regular expressions?</h3>
+					<p class="fragment">A regular expression pattern can be composed of simple characters, such as <span class = "span">/cat/</span>, or a combination of simple and special characters, such as <span class = "span">/ca*t/</span> or <span class = "span">/Number (\d+)\.\d*/ *</span>.</p>
+					<p class="fragment">*This example includes parentheses, which are used as a memory device.</p>
+				</section>
+
+				<section id="QUE4">
+					<h3>I just need to find a combination of letters or a word!</h3>
+					<p class="fragment">In this case, you need to use simple pattern.<br>
+					For example, we have simple pattern <span class = "span">/cat/</span> and this pattern matches character combinations in strings only when the exact sequence "cat" occurs.</p>
+					<pre class="fragment"><code>
+	let reg = /cat/;
+
+	let input1 = "My cat Emperor can turn off my computer."
+	/* There is a match here because 
+	all the characters are together and in required order. */ 
+
+	let input2 = "He is very fat but he likes to eat taco."
+	/* It's not a match. */
+
+	let input3 = "Rebecca told me, that animals can't turn off 
+				the equipment, but he turned off her laptop!"
+	/* It's not a match. */
+  						</code></pre>
+				</section>
+
+				<section id="QUE5">
+					<h3>What if I need to search something more than a direct match?</h3>
+					<p class="fragment">When the search for a match requires something more than a direct match, such as finding one or more b's, or finding white space, you can include special characters in the pattern.</p>
+					<pre class="fragment"><code>
+	let reg = /ca*t/; 
+	/* '*' means "0 or more occurrences of the preceding item", 
+	and this item is 'c' */
+	let input = 'catdogcatdogcaaaaaat';
+	let output = 'caaaaaat'; 
+	/* this pattern will match the substring */
+  				</code></pre>
+				</section>
+				<section>
+					<p>If you want to know more about lists of different special characters, you can click on these links.</p>
+					<p><a href="#/assertion">Assertions</a></p>
+					<p><a href="#/character">Character classes</a></p>
+					<p><a href="#/groups">Groups</a></p>
+					<p><a href="#/ranges">Ranges</a></p>
+					<p><a href="#/quantifier">Quantifiers</a></p>
+					<p><a href="#/unicode">Unicode property escapes</a></p>
+					<p><a href="#/flags">Flags</a></p>
+				</section>
+
+				<section id='assertion'>
+                    <h4>Assertions</h4>
+					<p class="fragment">Assertions include beginnings and endings of lines and words, and some other patterns (like look-arounds). It either succeeds (if a match is found) or fails (if a match is not found).</p>
+
+					<p class="fragment">For example, <span class = "span">'^'</span> matches the beginning of input.</p>
+					<pre class="fragment"><code class="code-3">
+	let reg = /^C/;
+	let input1 = 'iCe'; //Not a match.
+	let input2 = 'CoCos'; //It's a match!
+	let output = 'C'; //It's a match again!
+  						</code></pre>
+				</section>
+				<section>
+					<p class="fragment"><span class = "span">'$'</span> - matches the end of input</p>
+					<pre class="fragment"><code>
+	let reg = /T$/;
+	let input1 = 'cacTus'; // Not a match.
+	let input2 = 'caT'; // It's a match.
+	let output = 'T';
+	// It is the last symbol on input2.
+  						</code></pre>
+					<p class="fragment"><span class = "span">'\b'</span> - matches a word boundary. This is the position where a word character is not followed or preceeded by another word-character, such as between a letter and a space.</p>
+					<pre class="fragment"><code>
+	let reg1 = /\bm/;
+	//Matches the "m" in input "moon";
+	let reg2 = /oo\b/;
+	/* Does not match the "oo" in "moon", because "oo" is 
+	followed by "n" which is a word character. */
+	let reg3 = /\w\b\w/; 
+	/* Will never match, because a word character can never 
+	be followed by both a non-word and a word character. */
+	let input1 = 'moon';
+  					</code></pre>
+				</section>
+				<section>
+					<p class="fragment"><span class = "span">'x(?=y)'</span> - lookahead assertion: Matches "x" only if "x" is followed by "y".</p>
+					<pre class="fragment"><code>
+	let reg1 = /Cat(?=Emperor)/;
+	let input1 = 'Cat'; // Not a match.
+	let input2 = 'Emperor'; // Not a match.
+	let input3 = 'CatEmperor'; // It's a match.
+  						</code></pre>
+					<p class="fragment"><span class="span">'x(?!y)'</span> - negative lookahead assertion: Matches "x" only if "x" is not followed by "y".</p>
+					<pre class="fragment"><code class="code-7">
+	let reg1 = /Cat(?!Emperor)/;
+	let input1 = 'CatEmperor'; // Not a match.
+	let input2 = 'Сat Emperor'; // Match.
+		  			    </code></pre>
+						<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions'>Read more</a>
+				</section>
+				<section id='character'>
+					<h4>Character classes</h4>
+					<p class="fragment">Make one small sequence of characters match a larger set of characters.</p>
+					<p class="fragment">For example, [A-Z] could stand for any uppercase letter in the English alphabet, and \d could mean any digit. </p>
+
+					<p class="fragment"><span class="span">'.'</span> - matches any single character except line. </p>
+					<pre class="fragment"><code>
+	let reg1 = /.y/; 
+	let input = 'yes';
+	let output= 'y'; // not 'yes';
+						</code></pre>
+					<p class="fragment"><span class="span">'\d'</span> - matches any digit (Arabic numeral). Equivalent to <span class="span">[0-9]</span>.</p>
+					<pre class="fragment"><code>
+	let reg1 = /\d/; 
+	let input = 'My mother-in-law has 9 cats';
+	let output= '9';
+							</code></pre>
+				</section>
+				<section>					
+					<p class="fragment"><span class="span">'\D'</span> - matches any character that is not a digit (Arabic numeral). Equivalent to <span class="span">[^0-9]</span>.</p>
+					<pre class="fragment"><code>
+	let reg1 = /\D/; 
+	let input = '12345Q12345';
+	let output= 'Q';
+						</code></pre>
+					<p  class="fragment"><span class="span">'\w'</span> - matches any basic Latin alphanumeric character. Equivalent to <span class="span">[A-Za-z0-9_]</span>.</p>
+					<pre class="fragment"><code>
+	let reg1 = /\w/; 
+	let input = '@#$_ияФ';
+	let output= '_';
+						</code></pre>
+						<p class="fragment"><span class="span">'\W'</span> - matches any non-word character the Latin alphabet. Equivalent to <span class="span">[^A-Za-z0-9_]</span>.</p>
+					<pre class="fragment"><code>
+	let reg1 = /\W/; 
+	let input = 'MAU!';
+	let output= '!';
+						</code></pre>
+				</section>
+
+				<section id='ranges'>
+					<h4>Ranges</h4>
+					<p class="fragment">In case you want to define a pattern that includes a range of values simply insert the - (hyphen) metacharacter between the first and last character to be matched.</p>
+					
+					<p class="fragment">For example: [a-zA-Z] will match any letter of the alphabet: a to z (lowercase) or A to Z (uppercase).</p>
+					
+					<p class="fragment"><span class="span">'[xyz], [a-c]'</span> - matches any one of the enclosed characters. You can specify a range of characters by using a hyphen, but if the hyphen appears as the first or last character enclosed in the square brackets it is taken as a literal hyphen to be included in the character class as a normal character.</p>
+					<pre class="fragment"><code>
+	let reg1 = /[a-c]/; 
+	let input1 = 'cotton';
+	let output1= 'c';
+	let reg2 = /[ab-]/; 
+	let input2 = 'pop-corn';
+	let output1= '-';
+						</code></pre>
+				</section>
+				<section id='groups' >
+					<h4>Groups</h4>
+					<p class="fragment">A part of a pattern enclosed in parentheses (...) called capturing group.</p>
+					<p class="fragment">Parentheses group together a part of the regular expression, so that the modifiers can be applied to it as a whole. </p>
+					<p class="fragment">For example: Pattern <span class="span">go+</span> means <span class="span">g</span> character, followed by <span class="span">o</span> repeated one or more times. For instance, <span class="span">goooo</span> or <span class="span">gooooooooo</span>.
+						Parentheses group characters together, so <span class="span">(go)+</span> means <span class="span">go</span>, <span class="span">gogo</span>, <span class="span">gogogo</span> and so on.</p>
+				</section>
+				<section>
+					<h4>Capturing and Non-capturing Groups</h4>
+					<p class="fragment">Capturing groups capture the result for later use, non-capturing groups do not. </p>
+					<pre class="fragment"><code>
+	let reg1 =  /cat(,)\sdog\1/; 
+	let input1 = 'cat, dog, hamster';
+	let output1= 'cat, dog';
+					</code></pre>
+					<p class="fragment">Use <span class="span">(?: )</span> syntax for non capturing groups. </p>
+				</section>
+				<section>
+					<h4>Named and Unnamed Groups</h4>
+					<p class="fragment">Named groups are useful when input data may be presented in a different order than desired.</p>
+
+					<p class='fragment'>For example this input: </p>
+					<p class='fragment'> <span class="span">Name</span>:"John"  <span class="span">Surname</span>:"Doe"  <span class="span">Email</span>:"john@example.com"</p>
+					<p class='fragment'>Will be matched by pattern: </p>
+					<p class='fragment'> <span class="span">Name</span> :"(?<Name>[\w]+?)".*? <span class="span">Surname</span> :"(?<Surname>[\w]+?)".*? <span class="span">Email</span> :"(?<Email>\b[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b)"</p>
+					<a class='fragment' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges'>Read more about Groups and Ranges</a>
+
+				</section>
+				<section id='quantifiers'>
+					<h4>Quantifiers</h4>
+					<p class="fragment">Quantifiers indicate how many instances of a character, group, or character class must be present in the input for a match to be found. </p>
+					<p class="fragment"><span class="span">'x*'</span> - matches the preceding item "x" 0 or more times.</p>
+					<pre class="fragment"><code>
+	let reg1 =  /hu*/; 
+	let input1 = 'I am huuuuungry!';
+	let output1= 'huuuuuu';
+					</code></pre>
+					<p class="fragment">Ordinarily, quantifiers are greedy; they match as many occurrences of patterns as possible. Adding the <span class="span">?</span> character to a quantifier makes it lazy; so it matches as few occurrences as possible.</p>					
+				</section>
+				<section>
+					<p class="fragment"><span class="span">'x+'</span> - matches the preceding item "x" 1 or more times. Equivalent to <span class="span">{1,}</span>.</p>
+					<pre class="fragment"><code>
+	let reg1 =  /u+/; 
+	let input1 = 'I am hungry!'; // It's not matching...
+	let output1= 'u';
+	let input2 = 'I am huuungry!'; //It's a match!
+	let output2= 'uuu';
+					</code></pre>
+					<p class="fragment"><span class="span">'x{n}'</span> - where "n" is a positive integer, matches exactly "n" occurrences of the preceding item "x". </p>
+					<pre class="fragment"><code>
+	let reg1 =  /u{2}/; 
+	let input1 = 'I am hungry!'; //Not a match.
+	let input2 = 'I am huuungry!'; //A match!
+	let output1= 'uu;
+					</code></pre>
+
+				</section>
+
+				<section>
+					<p class="fragment"><span class="span">'x{n,}'</span> - where "n" is a positive integer, matches at least "n" occurrences of the preceding item "x".</p>
+					<pre class="fragment"><code>
+	let reg1 =  /u{2,}/; 
+	let input1 = 'I am hungry!'; // Not a match.
+	let input2 = 'I am huuungry!'; // It's a match!
+	let output1= 'uuu';
+					</code></pre>
+					<p class="fragment"><span class="span">'x{n,m}'</span> - where "n" is 0 or a positive integer, "m" is a positive integer, and m > n, matches at least "n" and at most "m" occurrences of the preceding item "x".</p>
+					<pre class="fragment"><code>
+	let reg1 =  /a{1,3}/; 
+	let input1 = 'Mu!';//Not a match.
+	let input2 = 'Mau!'; //Match.
+	let output2= 'a';
+	let input3 = 'Maaaaaaaaaaau!'; //Match.
+	let output3= 'aaa';
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers'>Read more about Quantifiers</a>
+				</section>
+
+				<section>
+					<h4>Unicode Property Escapes</h4>
+					<p class="fragment">This concept allows you to match characters based on their Unicode properties. 
+						It can be useful when you want to match emojis, punctuations, math symbols, letters from various alphabets (like Greek), etc.
+					</p>
+					<p class="fragment">To use this feature, a regular expression must include the <span class="span">/u</span> flag.</p>
+					<pre class="fragment"><code>
+	let regexGreekSymbol = /\p{Script_Extensions=Greek}/u;
+	regexGreekSymbol.test('π'); // true
+										</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes'>Read more about Unicode Property Escapes</a>
+				</section>
+
+				<section id="QUE6">
+					<h3>How can I match characters to search?</h3>
+					<p class="fragment">If you need to use any of the special characters literally (actually searching for a <span class="span">"*"</span>, for instance), you must escape it by putting a backslash in front of it. For instance, to search for <span class="span">"a"</span> followed by <span class="span">"*"</span> followed by <span class="span">"b"</span>, you'd use <span class="span">/a\*b/</span> — the backslash <span class="span">"escapes"</span> the <span class="span">"*"</span>, making it literal instead of special.<br>
+						Similarly, if you're writing a regular expression literal and need to match a slash <span class="span">("/")</span>, you need to escape that (otherwise, it terminates the pattern). For instance, to search for the string <span class="span">"/example/"</span> followed by one or more alphabetic characters, you'd use <span class="span">/\/example\/[a-z]+/</span>i—the backslashes before each slash make them literal.<br>
+						To match a literal backslash, you need to escape the backslash. For instance, to match the string <span class="span">"C:\"</span> where <span class="span">"C"</span> can be any letter, you'd use <span class="span">/[A-Z]:\\/ </span>— the first backslash escapes the one after it, so the expression searches for a single literal backslash.<br>
+						If using the RegExp constructor with a string literal, remember that the backslash is an escape in string literals, so to use it in the regular expression, you need to escape it at the string literal level. <span class="span">/a\*b/</span> and <span class="span">new RegExp("a\\*b")</span> create the same expression, which searches for <span class="span">"a"</span> followed by a literal <span class="span">"*"</span> followed by <span class="span">"b"</span>.
+					</p>
+				</section>
+
+				<section id="QUE7">
+					<h3>How do I use regular expressions in JavaScript?</h3>
+					<p class="fragment">In JavaScript, a RegExp is a built-in class with its own properties and methods, like <span class="span">test()</span> and <span class="span">exec()</span>. After creating, your regular expression becomes an instance of this class, and can use these methods.</p>
+					<p class="fragment">Regex are also often used with string methods  <span class="span">match()</span>,  <span class="span">replace()</span>,  <span class="span">search()</span>, and  <span class="span">split()</span>.</p>
+					<p class="fragment">When you want to know whether a pattern is found in a string, use the  <span class="span">test()</span> or  <span class="span">search()</span> methods; for more information (but slower execution) use the  <span class="span">exec()</span> or  <span class="span">match()</span> methods, which on success return an array and update properties of the associated regular expression object.</p>
+
+				</section>
+
+				<section>
+					<p>Parentheses around any part of the regular expression pattern causes that part of the matched substring to be remembered. Once remembered, the substring can be recalled for other use. See <a href="#/groups">Groups</a> and <a href="#/ranges">Ranges</a> for more details.</p>
+					<p><a href="#/exec">exec()</a></p>
+					<p><a href="#/test">test()</a></p>
+					<p><a href="#/match">match()</a></p>
+					<p><a href="#/matchAll">matchAll()</a></p>
+					<p><a href="#/search">search()</a></p>
+					<p><a href="#/replace">replace()</a></p>
+					<p><a href="#/replaceAll">replaceAll()</a></p>
+					<p><a href="#/split">split()</a></p>
+				</section>
+
+				<section id='exec'>
+					<h4>exec()</h4>
+					<p class="fragment">Executes a search for a match in a string. Returns an array of information or null on a mismatch.</p>
+					<pre class="fragment"><code>
+	let matches = /(fat \S+)/.exec('It is a fat cat!');
+	console.log(matches[1]); //output => 'fat cat'
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec'>Read more</a>
+				</section>
+
+				<section id='test'>
+					<h4>test()</h4>
+					<p class="fragment">Executes a search for a match between a regular expression and a specified string. Returns true or false.</p>
+					<pre class="fragment"><code>
+	const str = 'hello cat!';
+	const result = /^hello/.test(str);
+	console.log(result); // true
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test'>Read more</a>
+				</section>
+
+				<section id='match'>
+					<h4>match()</h4>
+					<p class="fragment">Retrieves the result of matching a string against a regular expression.</p>
+					<pre class="fragment"><code>
+	const paragraph = 'My cat is very fat';
+	const regex = /[A-Z]/g;
+	const found = paragraph.match(regex);
+	console.log(found); //output => "M"
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/match'>Read more</a>
+				</section>
+
+				<section id='matchAll'>
+					<h4>matchAll()</h4>
+					<p class="fragment">Returns an iterator of all results matching a string against a regular expression, including capturing groups.</p>
+					<pre class="fragment"><code>
+	const regexp = /t(e)(st(\d?))/g;
+	const str = 'test1test2';
+	const array = [...str.matchAll(regexp)];
+	console.log(array[0]); 
+	// expected output: Array ["test1", "e", "st1", "1"]
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll'>Read more</a>
+				</section>
+
+				<section id='search'>
+					<h4>search()</h4>
+					<p class="fragment">Executes a search for a match between a regular expression and this String object. The index of the first match between the regular expression and the given string, or -1 if no match was found.</p>
+					<pre class="fragment"><code>
+	const str = 'The quick brown fox jumps over the lazy dog. If the dog barked, was it really lazy?';
+	// any character that is not a word character or whitespace
+	const regex = /[^\w\s]/g;
+	console.log(str.search(regex)); // expected output: 43
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search'>Read more</a>
+				</section>
+
+				<section id='replace'>
+					<h4>replace()</h4>
+					<p class="fragment">Returns a new string with some or all matches of a pattern replaced by a replacement. The pattern can be a string or a RegExp, and the replacement can be a string or a function to be called for each match. If pattern is a string, only the first occurrence will be replaced.</p>
+					<pre class="fragment"><code>
+	const p = 'My cat is very fat! But her cat is thin.'';
+	console.log(p.replace('cat', 'monkey'));
+	/* expected output: 
+	"My monkey is very fat! But her cat is thin." */
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace'>Read more</a>
+				</section>
+
+				<section id='replaceAll'>
+					<h4>replaceAll()</h4>
+					<p class="fragment">Returns a new string with all matches of a pattern replaced by a replacement. The pattern can be a string or a RegExp, and the replacement can be a string or a function to be called for each match.</p>
+					<pre class="fragment"><code>
+	const p = 'My cat is very fat! But her cat is thin.';
+	console.log(p.replaceAll('cat', 'monkey'));
+	/* expected output: 
+	"My monkey is very fat! But her monkey is thin." */
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll'>Read more</a>
+				</section>
+
+				<section id='split'>
+					<h4>split()</h4>
+					<p class="fragment">Divides a String into an ordered list of substrings, puts these substrings into an array, and returns the array.  The division is done by searching for a pattern; where the pattern is provided as the first parameter in the method's call.</p>
+					<pre class="fragment"><code>
+	const str = 'The quick brown fox jumps over the lazy dog.';
+	const words = str.split(' ');
+	console.log(words[3]); // expected output: "fox"
+					</code></pre>
+					<a class="fragment" href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split'>Read more</a>
+				</section>
+
+				<section id="QUE8">
+					<h4>What if I need to do an advanced search?</h4>
+					<p class="table">Regular expressions have optional flags that allow for functionality like global searching and case-insensitive searching. These flags can be used separately or together in any order, and are included as part of the regular expression.</p>
+					<p class="table">There's only 6 flags in JS: </p>
+				</section>
+				<section>
+					<table id='flag-table'>
+						<tr>
+							<th scope="row"><a href="#/y">y</a></th>
+							<td class="table">“Sticky” mode: searching at the exact position in the text.							</td>
+							<td><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky'>sticky</a></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="#/g">g</a></th>
+							<td>Enables global search.</td>
+							<td><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global'>global</a></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="#/i">i</a></th>
+							<td>Case-insensitive search.</td>
+							<td><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/ignoreCase'>ignoreCase</a></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="#/m">m</a></th>
+							<td>Multi-line search.</td>
+							<td><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/multiline'>multiline</a></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="#/s">s</a></th>
+							<td> Allows '.' to match newline characters.</td>
+							<td><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/dotAll'>dotAll</a></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="#/u">u</a></th>
+							<td>"unicode"; treats a pattern as a sequence of unicode code points.</td>
+							<td><a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicode'>*</a></td>
+						</tr>
+					</table></section>
+
+				<section>
+					<h4 id="QUE9">Where can I find more information?</h4>
+					<p><a href='https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Regular_Expressions'>MDN</a></p>
+					<p><a href='https://www.w3schools.com/js/js_regexp.asp'>W3scholl</a></p>
+					<p><a href='https://www.programiz.com/javascript/regex'>Programiz.com</a></p>
+					<p><a href='https://javascript.info/regular-expressions'>JavaScript.info</a></p>
+					<p><a href='https://www.geeksforgeeks.org/javascript-regular-expressions/'>Geeksforgeeks.org</a></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
